@@ -1,0 +1,175 @@
+% BASIC SETTINGS
+\documentclass[a4paper,12pt]{article} % Set paper size and document type
+\usepackage{lmodern} % Use a slightly nicer looking font
+
+% Change margins - default margins are too broad
+\usepackage[margin=20mm]{geometry}
+
+% SOURCE CODE LISTING SETTINGS 
+% https://en.wikibooks.org/wiki/LaTeX/Source_Code_Listings
+\usepackage{listings}
+\usepackage{color}
+
+\definecolor{mygreen}{rgb}{0,0.6,0}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mymauve}{rgb}{0.58,0,0.82}
+
+\lstset{ %
+  backgroundcolor=\color{white},   % choose the background color; you must add \usepackage{color} or \usepackage{xcolor}
+  basicstyle=\footnotesize,        % the size of the fonts that are used for the code
+  breakatwhitespace=false,         % sets if automatic breaks should only happen at whitespace
+  breaklines=true,                 % sets automatic line breaking
+  captionpos=b,                    % sets the caption-position to bottom
+  commentstyle=\color{mygreen},    % comment style
+  deletekeywords={...},            % if you want to delete keywords from the given language
+  escapeinside={\%*}{*)},          % if you want to add LaTeX within your code
+  extendedchars=true,              % lets you use non-ASCII characters; for 8-bits encodings only, does not work with UTF-8
+  frame=single,	                   % adds a frame around the code
+  keepspaces=true,                 % keeps spaces in text, useful for keeping indentation of code (possibly needs columns=flexible)
+  keywordstyle=\color{blue},       % keyword style
+  otherkeywords={*,...},           % if you want to add more keywords to the set
+  numbers=left,                    % where to put the line-numbers; possible values are (none, left, right)
+  numbersep=5pt,                   % how far the line-numbers are from the code
+  numberstyle=\tiny\color{mygray}, % the style that is used for the line-numbers
+  rulecolor=\color{black},         % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. comments (green here))
+  showspaces=false,                % show spaces everywhere adding particular underscores; it overrides 'showstringspaces'
+  showstringspaces=false,          % underline spaces within strings only
+  showtabs=false,                  % show tabs within strings adding particular underscores
+  stepnumber=2,                    % the step between two line-numbers. If it's 1, each line will be numbered
+  stringstyle=\color{mymauve},     % string literal style
+  tabsize=2,	                   % sets default tabsize to 2 spaces
+  title=\lstname                   % show the filename of files included with \lstinputlisting; also try caption instead of title
+}
+
+% PREPARE TITLE
+\title{\textbf{Homework \#1 - C++ Intro}}
+\author{Name: }
+\date{} % Hide the date
+
+% START DOCUMENT
+\begin{document}
+
+\maketitle % Insert the title
+
+\section{Intro}
+
+Welcome to the homework! Today we learned a little bit about a \textbf{computer language} called \textbf{C++}. The C++ language is very popular for writing games and scientific programs.\\
+
+\noindent
+A \textbf{computer language} or \textbf{programming language} is a language that people use to talk to computers. Writing programs is called \textbf{programming} or \textbf{coding}, and a \textbf{programmer} or \textbf{coder} is a person who writes programs. Programmers write \textbf{source code}, also just called \textbf{code}, which is a list of steps for the computer to follow. Every program starts as source code, written by one or more programmers.\\
+
+\noindent
+For the computer to understand our source code, it has to be converted into an even simpler form called \textbf{binary code}. Everything on the computer is stored as binary code. All your pictures, movies, and music...they are all stored as binary code that looks like this: 
+
+\vspace{5mm}
+\begin{lstlisting}
+0011101011010101
+\end{lstlisting}
+
+\noindent
+Programs are just binary code too. The binary code that programs are made of is sometimes called \textbf{object code}. Each pattern of 1's and 0's in object code tells the computer to do something, like "add", "multiply", or "compare". To run our C++ programs, we have to first translate them into object code. We do this using a program called a \textbf{compiler} which takes our source code and converts it into object code for us. We did this today in class:
+
+\vspace{5mm}
+\begin{lstlisting}
+$ g++ hello.c -o hello
+\end{lstlisting}
+
+\noindent
+The compiler we used was called "g++", and it turns C++ source code into object code for us. The very first computers didn't have compilers, so you had to write your programs directly using object code. It was slow and difficult, and it was very easy to make mistakes.\\
+
+\noindent
+After the compiler translates your source code into object code, it will save the object code in a file. This file is called an \textbf{executable} or sometimes just a \textbf{program}. On a Mac or Linux computer, you can run your programs like this:
+
+\vspace{5mm}
+\begin{lstlisting}
+$ ./hello
+\end{lstlisting}
+
+\noindent
+We also did this today in class. After we typed this into the terminal and hit enter, the computer printed out "Hello, world!". 
+
+\clearpage
+
+\section{Input and Output in C++}
+
+Most programs do more than just say "Hello, world!". To be really useful, a program should be able to take \textbf{input} (read data), and produce \textbf{output} (write data). In C++, we "read" and "write" data using special "streams". There is one stream for input, called "cin", and another stream for output called "cout". You can think of streams as being kind of like "pipes" that data can travel through. Have a look at the program below, which can take \textbf{input} from the computer's keyboard, and show \textbf{output} on the computer's screen:
+
+\vspace{5mm}
+\lstinputlisting[language=C++, firstline=7]{ioTest.cpp}
+
+\noindent
+When this program runs, anything the user types in will be sent to \textbf{cin}. You can get the data that was typed in using the $>>$ \textbf{operator}. Operators are the part of a programming language that help us work with dada. Operators do things like compare numbers, add, and subtract.You can output (print out) data using the $<<$ operator. Look at the code above and pay attention to how $<<$ and $>>$ are used. You can try running this program on your own computer.
+
+\section{Variables and Data Types}
+
+Most programs need to have a place to save the data they are working on. We do this using \textbf{variables}. You can think of variables as being like boxes where we can store the data our program is working on.\\
+
+\noindent
+To the computer, all data we put into a variable looks the same: it is all just binary code. We need a way to tell the computer what kind of data is saved in our variables. We do that using \textbf{data types}. Whenever we create a new variable, we give it a \textbf{type}. Here are some common types in C++:
+
+\vspace{5mm}
+\begin{lstlisting}[language=C++]
+unsigned int a = 2; // A positive number without a "." like 36
+int b = -3; // A number without a "." like -10 or 1205
+float c = 2.5; // A number with a "." like 12.055
+double d = 3.28; // Like a float, but can hold bigger numbers
+char e = 'x'; // Holds letters, like 'a' or 'b'
+string f = "Hello bob!"; // Groups of letters (words), like "Steven"
+\end{lstlisting}
+
+\noindent
+It is important to remember the limits of each data type. Trying to save a number that is the wrong type (or too big, or too small) inside a variable can make your program do surprising things. See an example of this on the next page.
+
+\clearpage
+
+\vspace{5mm}
+
+
+\lstinputlisting[language=C++, firstline=7]{rollover.cpp}
+
+\noindent
+If you try running this on your computer, you'll get a surprising result: the variable y can count up to 500, but the variable x counts up to 255 and then goes back to zero! The reason that this happens is that "int" variables are bigger than "char" variables. The "char" variable can only hold binary numbers that have 8 digits in them, like "11111111" (255). If you try to put "100000000" (256) into a "char" variable, the computer throws away the extra "1" and just saves "00000000" (0) instead. This is why you must be careful to choose the right variable types!
+
+\section{If/else}
+
+Why is a computer smarter than a calculator? A calculator can only do math, but a computer can \emph{make decisions}. In C++, your program can make decisions using "if" and "else".
+
+\vspace{5mm}
+\lstinputlisting[language=C++, firstline=7]{conditionals.cpp}
+\vspace{5mm}
+
+\noindent
+You can make very complex decisions by putting if/else pairs inside of each other, or by having multiple different \textbf{conditions} (choices) in your if/else.
+
+\section{Now You Try}
+
+\subsection*{Doing Simple Math}
+
+Write a program that can ask for two numbers, add them, and print the answer. It should work like this:
+
+\begin{verbatim}
+Enter two numbers: 2 5
+Sum: 7
+\end{verbatim}
+
+\subsection*{Making Choices}
+
+Write a program that asks you to enter a number. If the number is bigger than 100 it says "That's big!". If the number is smaller than or equal to 100, it says "Wow, that's small!"\\
+
+\noindent
+It should work like this:
+
+\begin{verbatim}
+Enter a number: 100
+Wow, that's small!
+\end{verbatim}
+
+\noindent
+Or...
+
+\begin{verbatim}
+Enter a number: 101
+Wow, that's big!
+\end{verbatim}
+
+\end{document}

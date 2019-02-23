@@ -1,0 +1,120 @@
+% BASIC SETTINGS
+\documentclass[a4paper,12pt]{article} % Set paper size and document type
+\usepackage{lmodern} % Use a slightly nicer looking font
+
+% Change margins - default margins are too broad
+\usepackage[margin=20mm]{geometry}
+
+% SOURCE CODE LISTING SETTINGS 
+% https://en.wikibooks.org/wiki/LaTeX/Source_Code_Listings
+\usepackage{listings}
+\usepackage{color}
+
+\definecolor{mygreen}{rgb}{0,0.6,0}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mymauve}{rgb}{0.58,0,0.82}
+
+\lstset{ %
+  backgroundcolor=\color{white},   % choose the background color; you must add \usepackage{color} or \usepackage{xcolor}
+  basicstyle=\footnotesize,        % the size of the fonts that are used for the code
+  breakatwhitespace=false,         % sets if automatic breaks should only happen at whitespace
+  breaklines=true,                 % sets automatic line breaking
+  captionpos=b,                    % sets the caption-position to bottom
+  commentstyle=\color{mygreen},    % comment style
+  deletekeywords={...},            % if you want to delete keywords from the given language
+  escapeinside={\%*}{*)},          % if you want to add LaTeX within your code
+  extendedchars=true,              % lets you use non-ASCII characters; for 8-bits encodings only, does not work with UTF-8
+  frame=single,	                   % adds a frame around the code
+  keepspaces=true,                 % keeps spaces in text, useful for keeping indentation of code (possibly needs columns=flexible)
+  keywordstyle=\color{blue},       % keyword style
+  otherkeywords={*,...},           % if you want to add more keywords to the set
+  numbers=left,                    % where to put the line-numbers; possible values are (none, left, right)
+  numbersep=5pt,                   % how far the line-numbers are from the code
+  numberstyle=\tiny\color{mygray}, % the style that is used for the line-numbers
+  rulecolor=\color{black},         % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. comments (green here))
+  showspaces=false,                % show spaces everywhere adding particular underscores; it overrides 'showstringspaces'
+  showstringspaces=false,          % underline spaces within strings only
+  showtabs=false,                  % show tabs within strings adding particular underscores
+  stepnumber=2,                    % the step between two line-numbers. If it's 1, each line will be numbered
+  stringstyle=\color{mymauve},     % string literal style
+  tabsize=2,	                   % sets default tabsize to 2 spaces
+  title=\lstname                   % show the filename of files included with \lstinputlisting; also try caption instead of title
+}
+
+% PREPARE TITLE
+\title{\textbf{Homework \#3 - Functions and Pointers}}
+\author{Name: }
+\date{} % Hide the date
+
+% START DOCUMENT
+\begin{document}
+
+\maketitle % Insert the title
+
+\section{Pointers}
+
+Pointers are special variables that hold addresses. So a pointer doesn't tell you what your data is, it tells you \textbf{where to find it}. In Python, we did not use pointers because we didn't need to know where our data was: we always let the Python interpreter manage that for us.\\
+
+\noindent
+Sometimes in C++ we need to manage our own data, or even ask the computer for extra space (for instance, if we need to make an array bigger). When we do this, the computer will give us a \textbf{pointer} telling us where in computer memory we can put our data.\\
+
+\noindent
+Pointers are also great if we need to have a function that can change its own \textbf{operands} (the data we put into the function's parentheses "()"). For instance we could write something like this:
+
+\vspace{5mm}
+\lstinputlisting[language=C++,firstline=6]{pointerFunc.cpp}
+
+\noindent
+Notice that the function does NOT have to \textbf{return} any numbers (i.e. give back an answer). Instead, it directly changes the data we gave to it.
+
+\section{Now You Try}
+
+\subsection{Temperature Conversion, Again}
+
+Write another function to convert temperatures from C to F. The difference is that this function should NOT return any numbers. So it will look like this:
+
+\vspace{5mm}
+\begin{lstlisting}[language=C++]
+void changeTemp(float* temp) {
+	*temp = // Your code here
+}
+\end{lstlisting}
+
+\noindent
+Note the "*" which tells the computer that the variable "temp" is actually a pointer. Also pay close attention to the example code on the page above this one. They use "*" whenever they change the data pointed to by the pointer (as in *a = 0). Doing "*a" tells the computer "go get the data at the address saved in "a", and change it". This is how the function in the example code can change "a" \textbf{directly}. Compare that to our last program, where our function had to do something like this:
+
+\vspace{5mm}
+\begin{lstlisting}[language=C++]
+F = tempConv(C);
+\end{lstlisting}
+
+\noindent
+Notice that C is NOT changed by the tempConv function. Instead, tempConv \textbf{returns} a value which is then saved into F. 
+
+\subsection{Range Limiter}
+
+There are lots of science and engineering problems where you have to make sure that a number is between two other numbers. For instance, you might have to do some math with a number $x$ where $x$ is only allowed to be between 0 and 100 ($0 \le X \le 100$).\\
+
+\noindent
+Write a program which asks the user to enter a number. The program then checks if the number is between -10 and 10. If the number is less than -10, the program changes it to -10. If the number is more than 10, the program changes it to 10. If it is between -10 and 10, the program does not change it. Your program should look like this when it runs:
+
+\begin{verbatim}
+Enter a number: -234234
+Changed to: -10
+Enter a number: 79789
+Changed to: 10
+Enter a number: 5
+Changed to: 5
+\end{verbatim}
+
+\noindent
+Your program should use a function like this to change the numbers the user enters:
+
+\vspace{5mm}
+\begin{lstlisting}[language=C++]
+void limit(int* x) {
+	// Your code here
+}
+\end{lstlisting}
+
+\end{document}

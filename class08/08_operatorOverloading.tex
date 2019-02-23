@@ -1,0 +1,166 @@
+% BASIC SETTINGS
+\documentclass[a4paper,12pt]{article} % Set paper size and document type
+\usepackage{lmodern} % Use a slightly nicer looking font
+
+% Change margins - default margins are too broad
+\usepackage[margin=20mm]{geometry}
+
+% SOURCE CODE LISTING SETTINGS 
+% https://en.wikibooks.org/wiki/LaTeX/Source_Code_Listings
+\usepackage{listings}
+\usepackage{color}
+
+\definecolor{mygreen}{rgb}{0,0.6,0}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mymauve}{rgb}{0.58,0,0.82}
+
+\lstset{ %
+  backgroundcolor=\color{white},   % choose the background color; you must add \usepackage{color} or \usepackage{xcolor}
+  basicstyle=\footnotesize,        % the size of the fonts that are used for the code
+  breakatwhitespace=false,         % sets if automatic breaks should only happen at whitespace
+  breaklines=true,                 % sets automatic line breaking
+  captionpos=b,                    % sets the caption-position to bottom
+  commentstyle=\color{mygreen},    % comment style
+  deletekeywords={...},            % if you want to delete keywords from the given language
+  escapeinside={\%*}{*)},          % if you want to add LaTeX within your code
+  extendedchars=true,              % lets you use non-ASCII characters; for 8-bits encodings only, does not work with UTF-8
+  frame=single,	                   % adds a frame around the code
+  keepspaces=true,                 % keeps spaces in text, useful for keeping indentation of code (possibly needs columns=flexible)
+  keywordstyle=\color{blue},       % keyword style
+  otherkeywords={*,...},           % if you want to add more keywords to the set
+  numbers=left,                    % where to put the line-numbers; possible values are (none, left, right)
+  numbersep=5pt,                   % how far the line-numbers are from the code
+  numberstyle=\tiny\color{mygray}, % the style that is used for the line-numbers
+  rulecolor=\color{black},         % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. comments (green here))
+  showspaces=false,                % show spaces everywhere adding particular underscores; it overrides 'showstringspaces'
+  showstringspaces=false,          % underline spaces within strings only
+  showtabs=false,                  % show tabs within strings adding particular underscores
+  stepnumber=2,                    % the step between two line-numbers. If it's 1, each line will be numbered
+  stringstyle=\color{mymauve},     % string literal style
+  tabsize=2,	                   % sets default tabsize to 2 spaces
+  title=\lstname                   % show the filename of files included with \lstinputlisting; also try caption instead of title
+}
+
+% PREPARE TITLE
+\title{\textbf{Homework \#8 - Operator Overloading}}
+\author{Name: }
+\date{} % Hide the date
+
+% START DOCUMENT
+\begin{document}
+
+\maketitle % Insert the title
+
+\section{Changing the Meaning of Operators}
+
+We talked last class about the general idea of a \textbf{class}, which is a collection of data and functions stored together in the computer's memory, inside a single variable. We talked about how - in general - we write "set" and "get" functions to access data inside our classes. Well, what do we do if we want to use built-in operations like "+", "-", "*", or "/" with our classes? What if we want to be able to print our classes out nicely using "\textless\textless"? This can be done with something called \textbf{operator overloading}. Basically, we can teach the computer a \textbf{new meaning} for operations like "+" or "\textless\textless", and this can make our classes even easier to work with. Here is an example of a Point class for storing 2D points $(x,y)$:
+
+\vspace{5mm}
+\lstinputlisting[language=C++,firstline=13,lastline=43]{operatorOverloading.cpp}
+
+\noindent
+It looks a lot like the classes we used before. It still has "set" and "get" functions, but there's some other new stuff as well. Let's talk about that.
+
+\subsection{Constructors}
+
+You'll notice that there are two functions in the class that look like this:
+
+\vspace{5mm}
+\begin{lstlisting}[language=C++]
+// Empty constructor
+Point();
+    
+// Constructor
+Point(int xp, int yp);
+\end{lstlisting}
+
+\noindent
+These are called \textbf{constructors}. Their job is to set up everything inside the class each time we make a new copy of it (a new copy of a class is called an \textbf{object}). When we first make an \textbf{object} we sometimes do it like this:
+
+\vspace{5mm}
+\begin{lstlisting}[language=C++]
+Point p;
+\end{lstlisting}
+
+\noindent
+And sometimes we want to do it in a way that sets up all the data inside the object, like this:
+
+\vspace{5mm}
+\begin{lstlisting}[language=C++]
+Point p = Point(2,5);
+\end{lstlisting}
+
+\noindent
+This sets up a new Point with $x = 2$ and $y = 5$. This is why there are \textbf{two} constructors: the "empty" one handles cases where we don't need to set up the data inside our object, or when we aren't making a new object yet, and the non-empty one handles cases where we are making a new object and need to set it up.
+
+\subsection{Overloading Functions}
+
+So why are we allowed to have two different functions with the same name? We have two \textbf{constructors}, after all:
+
+\vspace{5mm}
+\begin{lstlisting}[language=C++]
+// Empty constructor
+Point();
+    
+// Constructor
+Point(int xp, int yp);
+\end{lstlisting}
+
+\noindent
+They are both called "Point", so how does the computer know which one we want to use? In C++, you are allowed to have more than one function with the same name, as long as the functions have different numbers of \textbf{arguments} (the things inside the parentheses "()"). Here, we have one constructor that takes two arguments, and one that takes none. This idea is called \textbf{overloading}. Basically, when the computer is making our program into machine code, it can tell which function is the right one to use by checking to see how many \textbf{arguments} and what \textbf{type} of arguments we have put inside the "()". 
+
+\clearpage
+
+\subsection{Prototypes vs Definitions}
+
+Well hold on, this just keeps getting stranger! These two constructors do not contain any code! There's no "\{\}". They simply end with ";" like this:
+
+\vspace{5mm}
+\begin{lstlisting}[language=C++]
+// Constructor
+Point(int xp, int yp);
+\end{lstlisting}
+
+\noindent
+So how does this function work? It doesn't actually do anything! In C++, you can actually split functions into two parts. One part is called a \textbf{prototype} and one part is called a \textbf{definition}. The \textbf{prototype} just tells us what kind of \textbf{arguments} go into the function. Later on in our code, we have to also write a \textbf{definition} which says says how the function will actually work. The strange thing about \textbf{constructors} is that their \textbf{definitions} go outside the class. So later on in our code, we have:
+
+\vspace{5mm}
+\lstinputlisting[language=C++,firstline=45,lastline=54]{operatorOverloading.cpp}
+
+\noindent
+These actually tell the computer what the two \textbf{constructors} should do. The "Point::" part in front just tells the computer that these two functions belong to the class "Point". 
+
+\subsection{Overloading Operators}
+
+We need the idea of a \textbf{prototype} for operator overloading. If you look back at the first page, you'll see that there's a \textbf{prototype} for the "+" operator inside our Point class...but there's no code saying how it works. That's farther down in our program code and looks like this:
+
+\vspace{5mm}
+\lstinputlisting[language=C++,firstline=56,lastline=60]{operatorOverloading.cpp}
+
+\noindent
+The "+" operator has to be \textbf{defined} outside of the Point class so that we  can use it without also saying the name of the class (like this code to make a new point):
+
+\vspace{5mm}
+\begin{lstlisting}[language=C++]
+Point x = Point.Point()
+\end{lstlisting}
+
+\noindent
+Putting the \textbf{definition} outside the class keeps us from having to say "Point.Point()" every time we want to use the constructor, or "Point.+(otherPoint)" every time we want to add points together. 
+
+\section{Your Turn}
+
+\subsection{Overloading Math}
+
+Change your Array class so that it overloads "+", "-", "*", and "/" for arrays (so that you can multiply all the numbers in two arrays together just by doing "A * B", for instance). You only need to make this work for arrays that are the same length.
+
+\subsection{Overloading output operators}
+
+Look at the example code for the Point class and notice that "\textless\textless" is overloaded too. Try to overload this in your Array class as well, so that you can do things like this:
+
+\vspace{5mm}
+\begin{lstlisting}[language=C++]
+cout << A << endl;
+\end{lstlisting}
+
+\end{document}

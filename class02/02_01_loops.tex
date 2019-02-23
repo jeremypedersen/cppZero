@@ -1,0 +1,150 @@
+% BASIC SETTINGS
+\documentclass[a4paper,12pt]{article} % Set paper size and document type
+\usepackage{lmodern} % Use a slightly nicer looking font
+
+% Change margins - default margins are too broad
+\usepackage[margin=20mm]{geometry}
+
+% SOURCE CODE LISTING SETTINGS 
+% https://en.wikibooks.org/wiki/LaTeX/Source_Code_Listings
+\usepackage{listings}
+\usepackage{color}
+
+\definecolor{mygreen}{rgb}{0,0.6,0}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mymauve}{rgb}{0.58,0,0.82}
+
+\lstset{ %
+  backgroundcolor=\color{white},   % choose the background color; you must add \usepackage{color} or \usepackage{xcolor}
+  basicstyle=\footnotesize,        % the size of the fonts that are used for the code
+  breakatwhitespace=false,         % sets if automatic breaks should only happen at whitespace
+  breaklines=true,                 % sets automatic line breaking
+  captionpos=b,                    % sets the caption-position to bottom
+  commentstyle=\color{mygreen},    % comment style
+  deletekeywords={...},            % if you want to delete keywords from the given language
+  escapeinside={\%*}{*)},          % if you want to add LaTeX within your code
+  extendedchars=true,              % lets you use non-ASCII characters; for 8-bits encodings only, does not work with UTF-8
+  frame=single,	                   % adds a frame around the code
+  keepspaces=true,                 % keeps spaces in text, useful for keeping indentation of code (possibly needs columns=flexible)
+  keywordstyle=\color{blue},       % keyword style
+  otherkeywords={*,...},           % if you want to add more keywords to the set
+  numbers=left,                    % where to put the line-numbers; possible values are (none, left, right)
+  numbersep=5pt,                   % how far the line-numbers are from the code
+  numberstyle=\tiny\color{mygray}, % the style that is used for the line-numbers
+  rulecolor=\color{black},         % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. comments (green here))
+  showspaces=false,                % show spaces everywhere adding particular underscores; it overrides 'showstringspaces'
+  showstringspaces=false,          % underline spaces within strings only
+  showtabs=false,                  % show tabs within strings adding particular underscores
+  stepnumber=2,                    % the step between two line-numbers. If it's 1, each line will be numbered
+  stringstyle=\color{mymauve},     % string literal style
+  tabsize=2,	                   % sets default tabsize to 2 spaces
+  title=\lstname                   % show the filename of files included with \lstinputlisting; also try caption instead of title
+}
+
+% PREPARE TITLE
+\title{\textbf{Homework \#2 - Loops}}
+\author{Name: }
+\date{} % Hide the date
+
+% START DOCUMENT
+\begin{document}
+
+\maketitle % Insert the title
+
+\section{For loops}
+
+Just like Python, C++ has both "while" and "for" loops. A "for" loop in C++ is written like this:
+
+\vspace{5mm}
+\begin{lstlisting}[language=C++]
+#include <iostream>
+
+using namespace std;
+
+int main() {
+
+	for (int i = 0; i < 10; i++) {
+		cout << i << endl;
+	}
+
+	return 0;
+}
+\end{lstlisting}
+
+\noindent
+This code will print out the numbers from 0 - 9. In Python, you'd print the numbers from 0 - 9 like this:
+
+\vspace{5mm}
+\begin{lstlisting}[language=Python]
+for i in range(0,10):
+	print i
+\end{lstlisting}
+
+\noindent
+What if we wanted to go through a list of both numbers and words? In Python, we could easily do that like this:
+
+\vspace{5mm}
+\begin{lstlisting}[language=Python]
+for i in ['banana', 'apple', 36]
+	print i
+\end{lstlisting}
+
+\noindent
+Unfortunately, there is nothing like this in C++. For loops can only count up or down, they can't actually go "item by item" through a list containing different types of data. This is one of the big differences between C++ and Python.
+
+\clearpage
+
+\section{While loops}
+
+While loops in C++ are a lot closer to their Python counterparts. A while loop looks like this:
+
+\vspace{5mm}
+\begin{lstlisting}[language=C++]
+#include <iostream>
+
+using namespace std;
+
+int main() {
+
+	int i = 0;
+	while (i < 10) {
+		cout << i << endl;
+		i++;
+	}
+	
+	return 0;
+}
+\end{lstlisting}
+
+\noindent
+One new thing here is the "i++". In C++ this means "add 1 to i". It's a bit like doing "i += 1" in Python...it's just shorter than writing "i = i + 1" and programmers love keeping things short!\\
+
+\section{Now You Try}
+
+\subsection{Summing up numbers}
+
+Write a short C++ program which asks for a number, then adds up all the numbers from 1 up to that number. The output should be something like this:
+
+\begin{verbatim}
+Enter a number: 5
+The sum is: 15
+\end{verbatim}
+
+\subsection{Countdown}
+
+Try writing a short program which counts from -1 to -99 by twos, like this:
+
+\begin{verbatim}
+-1
+-3
+-5
+-7
+...
+-99
+\end{verbatim}
+
+\noindent
+When should the loop stop? How much should you add or subtract from "i" each time the loop runs? 
+
+
+\end{document}

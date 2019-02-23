@@ -1,0 +1,182 @@
+% BASIC SETTINGS
+\documentclass[a4paper,12pt]{article} % Set paper size and document type
+\usepackage{lmodern} % Use a slightly nicer looking font
+
+% Change margins - default margins are too broad
+\usepackage[margin=20mm]{geometry}
+
+% SOURCE CODE LISTING SETTINGS 
+% https://en.wikibooks.org/wiki/LaTeX/Source_Code_Listings
+\usepackage{listings}
+\usepackage{color}
+
+\definecolor{mygreen}{rgb}{0,0.6,0}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mymauve}{rgb}{0.58,0,0.82}
+
+\lstset{ %
+  backgroundcolor=\color{white},   % choose the background color; you must add \usepackage{color} or \usepackage{xcolor}
+  basicstyle=\footnotesize,        % the size of the fonts that are used for the code
+  breakatwhitespace=false,         % sets if automatic breaks should only happen at whitespace
+  breaklines=true,                 % sets automatic line breaking
+  captionpos=b,                    % sets the caption-position to bottom
+  commentstyle=\color{mygreen},    % comment style
+  deletekeywords={...},            % if you want to delete keywords from the given language
+  escapeinside={\%*}{*)},          % if you want to add LaTeX within your code
+  extendedchars=true,              % lets you use non-ASCII characters; for 8-bits encodings only, does not work with UTF-8
+  frame=single,	                   % adds a frame around the code
+  keepspaces=true,                 % keeps spaces in text, useful for keeping indentation of code (possibly needs columns=flexible)
+  keywordstyle=\color{blue},       % keyword style
+  otherkeywords={*,...},           % if you want to add more keywords to the set
+  numbers=left,                    % where to put the line-numbers; possible values are (none, left, right)
+  numbersep=5pt,                   % how far the line-numbers are from the code
+  numberstyle=\tiny\color{mygray}, % the style that is used for the line-numbers
+  rulecolor=\color{black},         % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. comments (green here))
+  showspaces=false,                % show spaces everywhere adding particular underscores; it overrides 'showstringspaces'
+  showstringspaces=false,          % underline spaces within strings only
+  showtabs=false,                  % show tabs within strings adding particular underscores
+  stepnumber=2,                    % the step between two line-numbers. If it's 1, each line will be numbered
+  stringstyle=\color{mymauve},     % string literal style
+  tabsize=2,	                   % sets default tabsize to 2 spaces
+  title=\lstname                   % show the filename of files included with \lstinputlisting; also try caption instead of title
+}
+
+% PREPARE TITLE
+\title{\textbf{Homework \#6 - Preprocessor Directives}}
+\author{Name: }
+\date{} % Hide the date
+
+% START DOCUMENT
+\begin{document}
+
+\maketitle % Insert the title
+
+\section{Intro}
+
+C++ programs are \textbf{compiled}. This means that they are run through another computer program (called a compiler) which turns them into \textbf{machine code}, which is just a series of instructions for the computer, encoded as patterns of "1" and "0". During that process, our C++ files get read by the compiler, sometimes more than once. The first step in creating our program is done by a part of the compiler called the \textbf{preprocessor}. The job of the preprocessor is to make changes to our code before it is turned into machine code. You have gotten used to starting your programs with:
+
+\vspace{5mm}
+\begin{lstlisting}[language=C++]
+#include <iostream>
+\end{lstlisting}
+
+\noindent
+But why do we do this? In C++, lines that start with "\#" are special instructions for the preprocessor. The "\#include $<$iostream$>$" tells the preprocessor to go find a C++ file called "iostream" and copy it into our file. We do this so that we can use "cin" and "cout". In fact, any time we want to include functions or tools from another C++ file we will use "\#include". It is also possible to tell the preprocessor to replace certain words in our code with numbers, like this:
+
+\vspace{5mm}
+\begin{lstlisting}[language=C++]
+#include <iostream>
+#define INF 1000
+
+using namespace std;
+
+int main() {
+	int i = INF;
+	cout << i << endl;
+	return 0;
+}
+\end{lstlisting}
+
+\noindent
+When we build and run this program, the INF will be replaced by the number 1000. We can also use this behavior to create something called a "macro". This lets us replace parts of our code with something that looks a bit like a function. For instance, like this (see next page): 
+
+\clearpage
+
+\vspace{5mm}
+\begin{lstlisting}[language=C++]
+#include <iostream>
+#define min(a, b) a = a < b ? a : b
+
+using namespace std;
+
+int main() {
+	int a, b;
+	cin >> a;
+	cin >> b;
+	min(a,b);
+	cout << a;
+	return 0;
+}
+\end{lstlisting}
+
+\noindent
+Here, the min(a,b) code will be \textbf{replaced} by the code from the \#define, and will change "a" to be equal to the smaller number (either a or b).\\
+
+\noindent
+\textbf{A word of warning: } The preprocessor is a powerful tool but it is very easy to use it wrong. Remember, the preprocessor is \textbf{not} smart. It simply looks for text that matches \#define and then replaces it with whatever was in the \#define. This can result in very unclear and strange behavior in your programs, and it can make them hard to debug, because the compiler will warn you about errors in your code which happened \textbf{after} the preprocessor runs...so the line numbers of the error messages may not match the line numbers in your file editor. Similarly it is easy to create a \#define like this one which is \textbf{very} confusing for other programmers:
+
+\vspace{5mm}
+\begin{lstlisting}[language=C++]
+#include <iostream>
+#define return return;}
+
+using namespace std;
+
+int main() {
+	cout << "Hello world!" << endl;
+	return
+		
+\end{lstlisting}
+
+\noindent
+And this code \textbf{will} compile and run! Because "return" gets replaced with "return;\}" which fills in the missing semicolon (;) and brace (\}) for us. But it makes the program very confusing to read. So a word of warning: \textbf{if you must use \#define, don't use it often, and only use it for very simple things}.\\
+
+\clearpage
+
+\section{Now you try...}
+
+\subsection{Making range(0,10) work in C++}
+
+Add one or more \#define statements to this code so that it will run correctly. Do not change any of the code itself, just add \#define statements.
+
+\vspace{5mm}
+\begin{lstlisting}[language=C++]
+#include <iostream>
+using namespace std;
+int main() {
+	for range(0,10) {
+		cout << i << endl;
+	}
+	return 0;
+}	
+\end{lstlisting}
+
+\subsection{HackerRank Challenge}
+
+Solve the HackerRank C++ preprocessor challenge. You may find the hints below useful. 
+
+\subsubsection{Hint: Deleting code with \#define}
+
+You may need to add the following \#define to ignore the "FUNCTION(a,b)" lines and instead write separate \#define lines for the minimum() and maximum() functions:
+
+\vspace{5mm}
+\begin{lstlisting}[language=C++]
+#define FUNCTION(name,op) /* */
+\end{lstlisting}
+
+\subsubsection{Hint: Doing if/else comparisons}
+
+You can do a really quick if/else statement in C++ like this:
+
+\vspace{5mm}
+\begin{lstlisting}[language=C++]
+(a == b) ? a:b
+\end{lstlisting}
+
+\noindent
+If a and b are equal, this code returns the number a. If a and b are not equal, this code returns the number b. Think about how you could use this with "\textless" and "\textgreater" to make \textbf{minimum} and \textbf{maximum} \#define statements.
+
+\subsubsection{Hint: Adding quotes}
+
+\noindent
+It might also be useful for you to know that a \#define like this...
+
+\vspace{5mm}
+\begin{lstlisting}[language=C++]
+#define makeString(thing) #thing
+\end{lstlisting}
+
+\noindent
+Will put quotes "" around whatever words you put into its parentheses (). You can use this to write a \textbf{toStr()} \#define.
+
+\end{document}
